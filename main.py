@@ -27,7 +27,6 @@ def mostrar_menu():
     print()
     return input('Selecione uma opção: ')
 
-
 def adicionar_tarefas(descricao):
     conn = conectar()
     if conn is None: return
@@ -112,4 +111,32 @@ def remover_tarefas(tarefas_id):
         conn.close()
 
 def main():
-    ...
+    while True:
+        opcao = mostrar_menu()
+
+        if opcao == '1':
+            descricao = input('Digite a descrição da tarefa que deseja adicionar: ')
+            
+            if descricao:
+                adicionar_tarefas(descricao)
+            
+        elif opcao == '2':
+            lista_tarefas()
+        elif opcao == '3':
+            try:
+                id_tarefa = int(input('Digite o id da tarefa a ser concluida: '))
+                concluir_tarefas(id_tarefa)
+            except ValueError:
+                print('\n[ERRO] O id precisa ser um número inteiro')
+        elif opcao == '4':
+            try:
+                id_tarefa = int(input('Digite o id da tarefa a ser removida: '))
+                remover_tarefas(id_tarefa)
+            except ValueError:
+                print('\n[ERRO] O id precisa ser um número inteiro')
+        elif opcao == '5':
+            print('Saindo...')
+            break
+        else:
+            print('\n[ERRO] Opção inválida')
+
