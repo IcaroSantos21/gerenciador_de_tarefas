@@ -1,0 +1,32 @@
+.. Sistema de Gerenciamento de Tarefas com Python e MySQL
+
+=======================================================
+Sistema de Gerenciamento de Tarefas (To-Do List)
+=======================================================
+
+Bem-vindo à documentação do Projeto de Gerenciamento de Tarefas.
+
+Este projeto demonstra a integração de Python com o SGBDR MySQL para persistência de dados. O sistema é operado via linha de comando (CLI) e cobre as operações CRUD (Create, Read, Update, Delete) básicas em um banco de dados relacional.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Conteúdo:
+
+   guia_instalacao
+   tasks_module
+
+
+Funcionalidades Principais
+--------------------------
+
+* **Adicionar** novas tarefas ao banco de dados.
+* **Listar** todas as tarefas com seus respectivos status.
+* **Concluir** tarefas pelo ID.
+* **Remover** tarefas pelo ID.
+* Conexão robusta e encapsulada com MySQL.
+
+---
+
+Contribuidores
+--------------
+* Icaro (Desenvolvedor Principal)
