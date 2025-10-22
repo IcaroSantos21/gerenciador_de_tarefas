@@ -90,11 +90,26 @@ def concluir_tarefas(tarefas_id):
         cursor.close()
         conn.close()
 
-def remover_tarefas():
-    ...
+def remover_tarefas(tarefas_id):
+    conn = conectar()
+    if conn is None: return
+
+    cursor = conn.cursor()
+    sql = 'DELETE FROM tarefas WHERE id_tarefas = %s'
+
+    try:
+        cursor.execute(sql, (tarefas_id,))
+        conn.commit()
+
+        if cursor.rowcount > 0:
+            print(f'\n[SUCESSO] Tarefa com o ID: {tarefas_id} excluida com sucesso')
+        else:
+            print(f'\n[AVISO] Tarefa com o ID: {tarefas_id} não encontrado')
+    except Exception as e:
+        print(f'\n[ERRO] Erro ao deletar a tarefa {e}')
+    finally:
+        cursor.close()
+        conn.close()
 
 def main():
     ...
-
-concluir_tarefas(1)
-lista_tarefas()
