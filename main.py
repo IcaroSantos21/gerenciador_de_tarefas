@@ -46,7 +46,28 @@ def adicionar_tarefas(descricao):
         cursor.close()
 
 def lista_tarefas():
-    ...
+    conn = conector()
+    if conn is None: return
+    
+    cursor = conn.cursor()
+    sql = 'SELECT id_tarefas, descricao, status FROM tarefas ORDER BY data_criacao DESC'
+
+    try:
+        cursor.execute(sql)
+        tarefas = cursor.fetchall()
+
+        print('----LISTA DE TAREFAS----')
+        if not tarefas:
+            print('Nenhuma tarefa encontrada na lista')
+            return
+        for id_tarefas, descricao, status in tarefas:
+            prefixo = '[✅]' if status == 'concluido' else '[]'
+            print(f'{prefixo} ID: ({id_tarefas}) TAREFA: ({descricao}) STATUS: ({status})')
+    except Exception as e:
+        print(f'\n[ERRO] ao listar as tarefas: {e}')
+    finally:
+        cursor.close()
+        conn.close()
 
 def concluir_tarefas():
     ...
@@ -56,3 +77,5 @@ def remover_tarefas():
 
 def main():
     ...
+
+lista_tarefas()
