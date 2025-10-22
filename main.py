@@ -28,8 +28,22 @@ def mostrar_menu():
     return input('Selecione uma opção: ')
 
 
-def adicionar_tarefas():
-    ...
+def adicionar_tarefas(descricao):
+    conn = conector()
+    if conn is None: return
+
+    cursor = conn.cursor()
+    sql = "INSERT INTO tarefas (descricao) VALUES (%s)"
+
+    try:
+        cursor.execute(sql, (descricao,))
+        conn.commit()
+        print(f'\n[SUCESSO] Tarefa: {descricao} adiconada (ID: {cursor.lastrowid})')
+    except Exception as e:
+        print(f'\n[ERRO] Falha ao adicionar a tarefa: {e}')
+    finally:
+        conn.close()
+        cursor.close()
 
 def lista_tarefas():
     ...
