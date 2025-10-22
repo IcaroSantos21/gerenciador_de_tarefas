@@ -7,7 +7,7 @@ CONFIG = {
     "database": "gerenciador_de_tarefas"
 }
 
-def conector():
+def conectar():
     try:
         mydb = mysql.connector.connect(**CONFIG)
         return mydb
@@ -29,7 +29,7 @@ def mostrar_menu():
 
 
 def adicionar_tarefas(descricao):
-    conn = conector()
+    conn = conectar()
     if conn is None: return
 
     cursor = conn.cursor()
@@ -46,7 +46,7 @@ def adicionar_tarefas(descricao):
         cursor.close()
 
 def lista_tarefas():
-    conn = conector()
+    conn = conectar()
     if conn is None: return
     
     cursor = conn.cursor()
@@ -69,8 +69,26 @@ def lista_tarefas():
         cursor.close()
         conn.close()
 
-def concluir_tarefas():
-    ...
+def concluir_tarefas(tarefas_id):
+    conn = conectar()
+    if conn is None: return
+
+    cursor = conn.cursor()
+    sql = 'UPDATE tarefas SET status = "concluido" WHERE id_tarefas = %s'
+
+    try:
+        cursor.execute(sql, (tarefas_id,))
+        conn.commit()
+
+        if cursor.rowcount > 0:
+            print(f'\n[SUCESSO] Tarefa com o ID {tarefas_id} Concluída')
+        else:
+            print(f'\n[AVISO] Tarefa com o ID {tarefas_id} não encontrada')
+    except Exception as e:
+        print(f'\n[ERRO] Falha ao atualizar a tarefa para concluída: {e}')
+    finally:
+        cursor.close()
+        conn.close()
 
 def remover_tarefas():
     ...
@@ -78,4 +96,5 @@ def remover_tarefas():
 def main():
     ...
 
+concluir_tarefas(1)
 lista_tarefas()
